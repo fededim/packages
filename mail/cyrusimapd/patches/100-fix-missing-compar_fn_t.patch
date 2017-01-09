@@ -1,0 +1,81 @@
+Index: cyrus-imapd-2.5.10/configure
+===================================================================
+--- cyrus-imapd-2.5.10.orig/configure
++++ cyrus-imapd-2.5.10/configure
+@@ -16295,6 +16295,39 @@ fi
+ { $as_echo "$as_me:${as_lineno-$LINENO}: result: $cyrus_cv_sys_nonblock" >&5
+ $as_echo "$cyrus_cv_sys_nonblock" >&6; }
+ 
++
++{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for compar_fn_t in stdlib.h" >&5
++$as_echo_n "checking for compar_fn_t in stdlib.h... " >&6; }
++if ${ccache_cv_COMPAR_FN_T+:} false; then :
++  $as_echo_n "(cached) " >&6
++else
++
++    cat confdefs.h - <<_ACEOF >conftest.$ac_ext
++/* end confdefs.h.  */
++#include <stdlib.h>
++int
++main ()
++{
++void test_fn(void) { qsort(NULL, 0, 0, (__compar_fn_t)NULL); }
++  ;
++  return 0;
++}
++_ACEOF
++if ac_fn_c_try_compile "$LINENO"; then :
++  ccache_cv_COMPAR_FN_T=yes
++else
++  ccache_cv_COMPAR_FN_T=no
++fi
++rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
++fi
++{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ccache_cv_COMPAR_FN_T" >&5
++$as_echo "$ccache_cv_COMPAR_FN_T" >&6; }
++if test x"$ccache_cv_COMPAR_FN_T" = x"yes"; then
++
++$as_echo "#define HAVE_COMPAR_FN_T 1" >>confdefs.h
++
++fi
++
+ { $as_echo "$as_me:${as_lineno-$LINENO}: checking timezone GMT offset method" >&5
+ $as_echo_n "checking timezone GMT offset method... " >&6; }
+ if ${cyrus_cv_struct_sys_gmtoff+:} false; then :
+Index: cyrus-imapd-2.5.10/configure.ac
+===================================================================
+--- cyrus-imapd-2.5.10.orig/configure.ac
++++ cyrus-imapd-2.5.10/configure.ac
+@@ -539,6 +539,18 @@ cyrus_cv_sys_nonblock=fcntl,cyrus_cv_sys
+ AM_CONDITIONAL([NONBLOCK_FCNTL], [test "$cyrus_cv_sys_nonblock" = "fcntl"])
+ AC_MSG_RESULT($cyrus_cv_sys_nonblock)
+ 
++
++AC_CACHE_CHECK([for compar_fn_t in stdlib.h],ccache_cv_COMPAR_FN_T, [
++    AC_TRY_COMPILE(
++        [#include <stdlib.h>],
++        [void test_fn(void) { qsort(NULL, 0, 0, (__compar_fn_t)NULL); }],
++        ccache_cv_COMPAR_FN_T=yes,
++        ccache_cv_COMPAR_FN_T=no)])
++if test x"$ccache_cv_COMPAR_FN_T" = x"yes"; then
++   AC_DEFINE(HAVE_COMPAR_FN_T, 1,
++             Define to 1 if you have the `__compar_fn_t' typedef.)
++fi
++
+ AC_MSG_CHECKING(timezone GMT offset method)
+ AC_CACHE_VAL(cyrus_cv_struct_sys_gmtoff,AC_TRY_COMPILE([
+ #include <time.h>],[struct tm tm;
+Index: cyrus-imapd-2.5.10/lib/util.h
+===================================================================
+--- cyrus-imapd-2.5.10.orig/lib/util.h
++++ cyrus-imapd-2.5.10/lib/util.h
+@@ -66,7 +66,8 @@
+ # endif /* HAVE_PCREPOSIX_H */
+ #endif /* ENABLE_REGEX */
+ 
+-#ifndef __GNUC__
++#ifndef HAVE_COMPAR_FN_T
++#define HAVE_COMPAR_FN_T
+ typedef int (*__compar_fn_t)(const void *, const void *);
+ #endif
+ 

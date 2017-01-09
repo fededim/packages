@@ -1,0 +1,13 @@
+Index: courier-0.76.3/courier/filters/Makefile.in
+===================================================================
+--- courier-0.76.3.orig/courier/filters/Makefile.in
++++ courier-0.76.3/courier/filters/Makefile.in
+@@ -431,7 +431,7 @@ target_alias = @target_alias@
+ top_build_prefix = @top_build_prefix@
+ top_builddir = @top_builddir@
+ top_srcdir = @top_srcdir@
+-SUBDIRS = libfilter perlfilter
++SUBDIRS = libfilter
+ CLEANFILES = $(htmldoc_DATA) $(man_MANS) filtersocketdir.h filteractivedir.h \
+ 	pidfile.h permissions.dat
+ 

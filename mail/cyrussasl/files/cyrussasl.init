@@ -1,0 +1,15 @@
+#!/bin/sh /etc/rc.common
+#see https://sys4.de/de/blog/2015/01/07/cyrus-sasl-saslauthd-man-page/ for command line reference
+
+START=60
+
+
+start() {
+        logger -t 'cyrussasl' "Starting saslauthd service."
+        service_start /usr/bin/saslauthd -a getpwent  # -a ldap -O /etc/saslauthd.conf
+}
+
+stop() {
+        logger -t 'cyrussasl' "Stopping saslauthd service."
+        service_stop /usr/bin/saslauthd
+}

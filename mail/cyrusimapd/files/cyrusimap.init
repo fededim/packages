@@ -1,0 +1,15 @@
+#!/bin/sh /etc/rc.common
+#see https://sys4.de/de/blog/2015/01/07/cyrus-sasl-saslauthd-man-page/ for command line reference
+
+START=70
+
+
+start() {
+        logger -t 'cyrusimap' "Starting master service."
+        service_start /usr/bin/master
+}
+
+stop() {
+        logger -t 'cyrusimap' "Stopping master service."
+        service_stop /usr/bin/master
+}

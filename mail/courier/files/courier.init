@@ -1,0 +1,14 @@
+#!/bin/sh /etc/rc.common
+
+START=60
+
+
+start() {
+        logger -t 'courier' "Starting courier service."
+        /usr/libexec/courier/sbin/courier start
+}
+
+stop() {
+        logger -t 'courier' "Stopping courier service."
+	/usr/libexec/courier/sbin/courier stop
+}

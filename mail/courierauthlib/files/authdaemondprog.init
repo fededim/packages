@@ -1,0 +1,15 @@
+#!/bin/sh /etc/rc.common
+#see http://courier-authlib.sourceforge.net/reference.html for command line reference
+
+START=60
+
+
+start() {
+        logger -t 'courier-authlib' "Starting authdaemondprog service."
+        service_start /usr/bin/authdaemondprog
+}
+
+stop() {
+        logger -t 'courier-authlib' "Stopping authdaemondprog service."
+        service_stop /usr/bin/authdaemondprog
+}

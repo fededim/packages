@@ -1,0 +1,26 @@
+Index: cyrus-imapd-2.5.10/Makefile.in
+===================================================================
+--- cyrus-imapd-2.5.10.orig/Makefile.in
++++ cyrus-imapd-2.5.10/Makefile.in
+@@ -2274,7 +2274,7 @@ sieve_libcyrus_sieve_la_LIBADD = \
+     lib/libcyrus.la
+ 
+ sieve_libcyrus_sieve_la_CFLAGS = $(AM_CFLAGS) $(CFLAG_VISIBILITY)
+-LD_SIEVE_ADD = sieve/libcyrus_sieve.la $(LD_BASIC_ADD)
++LD_SIEVE_ADD = sieve/libcyrus_sieve.la $(LD_BASIC_ADD) $(COM_ERR_LIBS)
+ sieve_sievec_LDADD = $(LD_SIEVE_ADD)
+ sieve_sieved_LDADD = $(LD_SIEVE_ADD)
+ sieve_test_SOURCES = sieve/test.c imap/mutex_fake.c
+Index: cyrus-imapd-2.5.10/Makefile.am
+===================================================================
+--- cyrus-imapd-2.5.10.orig/Makefile.am
++++ cyrus-imapd-2.5.10/Makefile.am
+@@ -1481,7 +1481,7 @@ sieve_libcyrus_sieve_la_LIBADD = \
+     lib/libcyrus.la
+ sieve_libcyrus_sieve_la_CFLAGS = $(AM_CFLAGS) $(CFLAG_VISIBILITY)
+ 
+-LD_SIEVE_ADD = sieve/libcyrus_sieve.la $(LD_BASIC_ADD)
++LD_SIEVE_ADD = sieve/libcyrus_sieve.la $(LD_BASIC_ADD) $(COM_ERR_LIBS)
+ 
+ sieve_sievec_LDADD = $(LD_SIEVE_ADD)
+ sieve_sieved_LDADD = $(LD_SIEVE_ADD)

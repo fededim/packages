@@ -1,0 +1,13 @@
+Index: courier-0.76.3/courier/module.esmtp/Makefile.in
+===================================================================
+--- courier-0.76.3.orig/courier/module.esmtp/Makefile.in
++++ courier-0.76.3/courier/module.esmtp/Makefile.in
+@@ -472,7 +472,7 @@ commonLDADD = ../../courier/libs/libmodu
+ 			`cat ../../libs/soxwrap/soxlibs.dep` \
+ 			@NETLIBS@ $(ldaddlibdl) $(DEBUGLIB)
+ 
+-courieresmtp_LDADD = -lcourierauthsaslclient $(commonLDADD)
++courieresmtp_LDADD = -lcourierauthsaslclient -lcourierauthsasl -lcourierauth -lcourierauthcommon $(commonLDADD)
+ courieresmtp_LDFLAGS = `@COURIERAUTHCONFIG@ --ldflags`
+ courieresmtpd_DEPENDENCIES = $(courieresmtp_DEPENDENCIES) \
+ 				../../libs/tcpd/libspipe.la
